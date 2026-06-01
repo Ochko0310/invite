@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>🎂 Төрсөн өдрийн урилга</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Nunito',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#f9e8ef;
+    overflow:hidden;
+    padding:20px;
+}
+
+.container{
+    width:100%;
+    max-width:650px;
+}
+
+.card{
+    background:white;
+    border-radius:35px;
+    padding:40px;
+    text-align:center;
+    box-shadow:0 20px 40px rgba(0,0,0,.12);
+    position:relative;
+}
+
+.card img{
+    width:220px;
+    height:220px;
+    object-fit:cover;
+    border-radius:25px;
+}
+
+h1{
+    margin-top:25px;
+    color:#7b1fa2;
+    font-size:42px;
+    line-height:1.2;
+}
+
+.info{
+    margin-top:25px;
+    color:#555;
+    font-size:18px;
+}
+
+.info p{
+    margin:8px 0;
+}
+
+.countdown{
+    margin-top:25px;
+    background:#fff0f7;
+    padding:18px;
+    border-radius:20px;
+    font-size:24px;
+    font-weight:700;
+    color:#d63384;
+}
+
+.buttons{
+    margin-top:30px;
+    display:flex;
+    justify-content:center;
+    gap:20px;
+    flex-wrap:wrap;
+}
+
+button{
+    border:none;
+    cursor:pointer;
+    transition:.25s;
+}
+
+.yes-btn{
+    background:#ff5ba7;
+    color:white;
+    padding:16px 42px;
+    border-radius:18px;
+    font-size:22px;
+    font-weight:800;
+    box-shadow:0 8px 20px rgba(255,91,167,.35);
+}
+
+.yes-btn:hover{
+    transform:scale(1.05);
+}
+
+.no-btn{
+    background:#ececec;
+    color:#444;
+    padding:16px 36px;
+    border-radius:18px;
+    font-size:22px;
+    position:relative;
+}
+
+.note{
+    margin-top:35px;
+    color:#777;
+}
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.45);
+    display:none;
+    justify-content:center;
+    align-items:center;
+}
+
+.modal-content{
+    background:white;
+    padding:35px;
+    border-radius:25px;
+    width:90%;
+    max-width:450px;
+    text-align:center;
+}
+
+.modal-content h2{
+    color:#d63384;
+    margin-bottom:15px;
+}
+
+.modal-content a{
+    display:inline-block;
+    margin-top:15px;
+    color:#7b1fa2;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.flower{
+    position:absolute;
+    font-size:30px;
+    animation:float 5s linear infinite;
+}
+
+@keyframes float{
+    from{
+        transform:translateY(100vh);
+    }
+    to{
+        transform:translateY(-150px);
+    }
+}
+
+@media(max-width:600px){
+    h1{
+        font-size:32px;
+    }
+
+    .card{
+        padding:25px;
+    }
+
+    .card img{
+        width:180px;
+        height:180px;
+    }
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+    <div class="card">
+
+        <!-- Өөрийн зургаа энд солино -->
+        <img src="cake.jpg" />
+
+        <h1>🎂 П.Лхагва-Очир-ын төрсөн өдөрт хүрэлцэн ирнэ үү.</h1>
+
+        <div class="info">
+            <p>📅 2026.06.02</p>
+            <p>🕕 00:00</p>
+            <p>📍 Очбадрах-ын гэрт </p>
+        </div>
+
+        <div class="countdown" id="countdown">
+            Loading...
+        </div>
+
+        <div class="buttons">
+            <button class="yes-btn" onclick="showInvite()">
+                ТИЙМ 💖
+            </button>
+
+            <button class="no-btn" id="noBtn">
+                ҮГҮЙ 🏃
+            </button>
+        </div>
+
+        <div class="note">
+            ("ҮГҮЙ" дарах гэж байна уу даа? 😆)
+        </div>
+
+    </div>
+</div>
+
+<div class="modal" id="modal">
+    <div class="modal-content">
+
+        <h2>🎉 Баярлалаа!</h2>
+
+        <p>
+            Чамайг өөрийнхөө төрсөн өдөрт ирнэ гэж найдаж байна 💖
+        </p>
+
+        <br>
+
+        <p>
+            📅 2026.06.02 <br>
+            🕕 00:00 <br>
+            📍 Очбадрах-ын гэрт
+        </p>
+
+        <a href="https://www.google.com/maps/place/43%C2%B034'11.9%22N+104%C2%B025'31.9%22E/@43.5699688,104.4231042,18z/data=!4m4!3m3!8m2!3d43.569984!4d104.425518?entry=ttu&g_ep=EgoyMDI2MDUyNy4wIKXMDSoASAFQAw%3D%3Dx ">
+            📍 Байршил харах
+        </a>
+
+    </div>
+</div>
+
+<script>
+
+// Countdown
+
+const targetDate = new Date("2026-06-02T00:00:00");
+
+function updateCountdown(){
+
+    const now = new Date();
+    const diff = targetDate - now;
+
+    const days = Math.floor(diff/(1000*60*60*24));
+    const hours = Math.floor((diff/(1000*60*60))%24);
+    const mins = Math.floor((diff/(1000*60))%60);
+    const secs = Math.floor((diff/1000)%60);
+
+    document.getElementById("countdown").innerHTML =
+        `⏳ ${days} өдөр ${hours} цаг ${mins} минут ${secs} сек`;
+}
+
+setInterval(updateCountdown,1000);
+updateCountdown();
+
+
+// YES button
+
+function showInvite(){
+    document.getElementById("modal").style.display="flex";
+    createConfetti();
+}
+
+
+// NO button escape
+
+const noBtn = document.getElementById("noBtn");
+
+noBtn.addEventListener("mouseenter",()=>{
+
+    const maxX = window.innerWidth - noBtn.offsetWidth;
+    const maxY = window.innerHeight - noBtn.offsetHeight;
+
+    noBtn.style.position="fixed";
+    noBtn.style.left=Math.random()*maxX+"px";
+    noBtn.style.top=Math.random()*maxY+"px";
+
+});
+
+
+// Confetti
+
+function createConfetti(){
+
+    for(let i=0;i<40;i++){
+
+        const flower=document.createElement("div");
+
+        flower.innerHTML="🎉";
+        flower.className="flower";
+
+        flower.style.left=Math.random()*100+"vw";
+        flower.style.animationDuration=
+        (Math.random()*3+2)+"s";
+
+        document.body.appendChild(flower);
+
+        setTimeout(()=>{
+            flower.remove();
+        },5000);
+    }
+}
+
+</script>
+
+</body>
+</html>
